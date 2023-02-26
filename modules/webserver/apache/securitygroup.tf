@@ -1,13 +1,12 @@
 #web-securitygroup
 resource "aws_security_group" "web_sg" {
-  name        = "websg-${terraform.workspace}"
+  name        = "websg"
   description = "controls access to the LB"
   vpc_id      = aws_vpc.lamp_vpc.id
-  tags = merge(
-    {
-      "Name" : "websg-${terraform.workspace}"
-    }, var.default_tags
-  )
+  
+  tags = {
+      Name = "websg"
+    }
 }
 
 
@@ -24,25 +23,28 @@ resource "aws_security_group_rule" "lb_to_web" {
 
 
 resource "aws_security_group_rule" "debuglaptop" {
-  security_group_id = aws_security_group.websg.id
+  
   type              = "ingress"
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["${var.personal_laptop_ip}/32"]
+  security_group_id = aws_security_group.websg.id
 }
 
 resource "aws_security_group_rule" "ssh" {
-  security_group_id = aws_security_group.websg.id
+  
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["${var.personal_laptop_ip}/32"]
+  security_group_id = aws_security_group.websg.id
 
 }
 
 #Internet Control Message Protocol (ICMP, Protocole de message de contrôle sur Internet)
+
 resource "aws_security_group_rule" "icmp" {
   security_group_id = aws_security_group.websg.id
   type              = "ingress"

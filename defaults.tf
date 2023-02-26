@@ -2,14 +2,11 @@
 resource "aws_default_route_table" "defaultroute" {
   default_route_table_id = aws_vpc.lamp_vpc.default_route_table_id
 
-  tags = merge({
-    Name = "defaultroute-${terraform.workspace}"
-  }, var.default_tags)
+  tags = {
+    Name = "defaultroute"
+  }
 }
 
-/* data "aws_subnet_ids" "allsubnets" {
-  vpc_id = aws_vpc.lamp_vpc.id
-} */
 
 
 resource "aws_default_network_acl" "defaultnacl" {
@@ -37,17 +34,17 @@ resource "aws_default_network_acl" "defaultnacl" {
     ignore_changes = [subnet_ids]
   }
 
-  tags = merge({
-    Name = "defaultroute-${terraform.workspace}"
-  }, var.default_tags)
+  tags = {
+    Name = "defaultroute"
+  }
 }
 
 
 resource "aws_default_security_group" "defaultsg" {
   vpc_id = aws_vpc.lamp_vpc.id
 
-  tags = merge({
-    Name = "defaultsg-${terraform.workspace}"
-  }, var.default_tags)
+  tags = {
+    Name = "defaultsg"
+  }
 
 }

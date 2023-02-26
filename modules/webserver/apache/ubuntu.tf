@@ -29,20 +29,56 @@ resource "aws_instance" "lampsetup" {
   root_block_device {
     volume_size           = var.root_volume_size
     delete_on_termination = true
-    encrypted             = true
+    # encrypted             = true
     volume_type           = "gp2"
 
-    tags = merge({
-      Name = "rootVolume-${count.index}-${terraform.workspace}"
-    }, var.default_tags)
+    tags = {
+      Name = "rootVolume"
+    }
   }
 
 
   user_data = file("installAnsibleUbuntu.sh")
 
+  provisioner "file" {
+    source      = "install_lamp.yml"
+    destination = "/home/ubuntu/install_lamp.yml"
 
-  tags = merge({
-    Name = "Lamp-${count.index}-${terraform.workspace}"
-  }, var.default_tags)
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("./dawan.pem")
+      host        = self.public_ip
+    }
+  }
+
+  provisioner "file" {
+    source      = "index.html"
+    destination = "/home/ubuntu/index.html"
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("./dawan.pem")
+      host        = self.public_ip
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sleep 120; ansible-playbook install_lamp.yml"
+    ]
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("./dawan.pem")
+      host        = self.public_ip
+    }
+  }
+
+  
+
+  tags = {
+    Name = "Lamp"
+  }
 }
  

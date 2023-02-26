@@ -5,53 +5,49 @@ resource "aws_lb" "lampalb" {
   security_groups    = [aws_security_group.lbsg.id]
   subnets            = aws_subnet.websubnets.*.id
 
-  enable_deletion_protection = false
+  enable_deletion_protection = false #default
 
-  tags = merge(
-    {
-      "Name" : "alb-${terraform.workspace}"
-  }, var.default_tags)
+  tags = {
+      "Name" = "alb"
+  }
 }
 
 
-resource "aws_alb_target_group" "lamptg" {
+resource "aws_lb_target_group" "lamptg" {
   name        = "lamp-alb-target"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = aws_vpc.lamp_vpc.id
-  target_type = "instance"
+  target_type = "instance" #default
 
   health_check {
-    enabled             = true
-    healthy_threshold   = 3
+    enabled             = true #default
+    healthy_threshold   = 3 #default
     interval            = 30
-    matcher             = "200"
+    matcher             = "200,202"
     path                = "/"
     port                = "80"
-    protocol            = "HTTP"
-    timeout             = 5
+    protocol            = "HTTP" #default
+    timeout             = 5 #default
     unhealthy_threshold = 3
   }
 }
 
-resource "aws_alb_listener" "listener_http" {
+resource "aws_lb_listener" "listener_http" {
   load_balancer_arn = aws_lb.lampalb.arn
-  port              = "80"
-  protocol          = "HTTP"
-
   default_action {
     target_group_arn = aws_alb_target_group.lamptg.arn
     type             = "forward"
   }
+
+  port              = "80"
+  protocol          = "HTTP" #default
 }
 
 resource "aws_lb_target_group_attachment" "ipattachment" {
-  count            = var.az_count
+  #count            = var.az_count
   target_group_arn = aws_alb_target_group.lamptg.arn
   target_id        = aws_instance.lampsetup[count.index].id
   port             = 80
 }
 
-output "alburl" {
-  value = aws_lb.lampalb.dns_name
-}

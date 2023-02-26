@@ -1,0 +1,29 @@
+---
+- name: install lamp 
+  hosts: localhost
+  become: true
+  # gather_facts: yes
+  
+  tasks:
+  - name: install Apache 
+    apt: 
+      name: apache2, php7.4 , php-mysql, libapache2-mod-php 
+      state: present
+
+  - name: Change ownership of directory
+    ansible.builtin.file:
+            path: /var/www/html
+            state: directory
+            recurse: yes
+            owner: ubuntu
+            group: ubuntu
+
+  - name: Move index.html
+    ansible.builtin.copy: 
+      src: index.html
+      dest: /var/www/html/
+
+  - name: Restart Apache Service
+    ansible.builtin.service:
+          name: apache2
+          state: restarted

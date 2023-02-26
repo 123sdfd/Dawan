@@ -48,11 +48,9 @@ resource "aws_subnet" "websubnets" {
   cidr_block           = cidrsubnet(aws_vpc.lamp_vpc.cidr_block, 2, count.index)
   availability_zone_id = data.aws_availability_zones.available.zone_ids[count.index]
 
-  tags = merge(
-    {
-      "Name" : "web-subnet-${count.index}-${terraform.workspace}"
-  }, var.default_tags)
-
+  tags = {
+      Name = "web-subnet-${count.index}"
+  }
 }
 
 resource "aws_subnet" "dbsubnets" {
@@ -61,11 +59,9 @@ resource "aws_subnet" "dbsubnets" {
   cidr_block           = cidrsubnet(aws_vpc.lamp_vpc.cidr_block, 2, count.index + 2)
   availability_zone_id = data.aws_availability_zones.available.zone_ids[count.index]
 
-  tags = merge(
-    {
-      "Name" : "db-subnet-${count.index}-${terraform.workspace}"
-  }, var.default_tags)
-
+  tags = {
+      Name = "db-subnet-${count.index}"
+  }
 }
 
 
@@ -73,51 +69,53 @@ resource "aws_db_subnet_group" "databasegroup" {
   name       = "lampdb"
   subnet_ids = aws_subnet.dbsubnets.*.id
 
-  tags = merge(
-    {
-      "Name" : "db-subnetgroup-${terraform.workspace}"
-  }, var.default_tags)
+  tags = {
+      Name = "db-subnetgroup"
+  }
 }
 
+
 #
-resource "aws_route_table_association" "private_route_db_table_association" {
-  count          = var.az_count
+resource "aws_route_table_association" "private_db_route_table_association" {
+  count          = var.az_count #
   subnet_id      = element(aws_subnet.dbsubnets.*.id, count.index)
   route_table_id = aws_route_table.dbroute.id
 }
 
 
 resource "aws_route_table_association" "public_web_route_table_association" {
-  count          = var.az_count
+  count          = var.az_count #
   subnet_id      = element(aws_subnet.websubnets.*.id, count.index)
   route_table_id = aws_route_table.webroute.id
 }
 
 
 # nat gateway
-/* resource "aws_eip" "gweip" {
-  count      = var.nat_count
-  vpc        = true
-  depends_on = [aws_internet_gateway.igw]
-  tags = merge({
-    Name = "eip-${count.index}-${terraform.workspace}"
-  }, var.default_tags)
-}
+#  resource "aws_eip" "gweip" {
+#   count      = var.nat_count
+#   vpc        = true
+#   depends_on = [aws_internet_gateway.igw]
+
+#   tags = {
+#     Name = "eip-${count.index}"
+#   }
+# }
 
 
-resource "aws_nat_gateway" "ngw" {
-  count         = var.nat_count
-  subnet_id     = element(aws_subnet.lbsubnet.*.id, count.index)
-  allocation_id = element(aws_eip.gweip.*.id, count.index)
-  tags = merge({
-    Name = "ngw=${count.index}-${terraform.workspace}"
-  }, var.default_tags)
-} */
+# resource "aws_nat_gateway" "ngw" {
+#   count         = var.nat_count
+#   subnet_id     = element(aws_subnet.lbsubnet.*.id, count.index)
+#   allocation_id = element(aws_eip.gweip.*.id, count.index)
+
+#   tags = {
+#     Name = "ngw=${count.index}"
+#   }
+# } 
 
 
 #
-resource "aws_route" "internet_access_web" {
-  route_table_id         = aws_route_table.webroute.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw.id
-}
+# resource "aws_route" "internet_access_web" {
+#   route_table_id         = aws_route_table.webroute.id
+#   destination_cidr_block = "0.0.0.0/0"
+#   gateway_id             = aws_internet_gateway.igw.id
+# }
