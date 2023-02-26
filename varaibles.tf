@@ -27,14 +27,9 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "key_name" {
-  type    = string
-  default = "dawan"
-}
-
 variable "root_volume_size" {
   type    = string
-  default = "3"
+  default = "10"
 }
 
 # variable "default_tags" {
@@ -53,14 +48,6 @@ variable "vpc_cidr" {
   type = string
   default = "10.0.0.0/16"
 }
-
-variable "az_count" {
-  type    = number
-  default = 2
-}
-
-
-
 
 #
 variable "multi_az_db" {

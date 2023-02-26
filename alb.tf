@@ -2,7 +2,7 @@ resource "aws_lb" "lampalb" {
   name               = "lamp-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lbsg.id]
+  security_groups    = [aws_security_group.lb_sg.id]
   subnets            = aws_subnet.websubnets.*.id
 
   enable_deletion_protection = false #default
@@ -36,7 +36,7 @@ resource "aws_lb_target_group" "lamptg" {
 resource "aws_lb_listener" "listener_http" {
   load_balancer_arn = aws_lb.lampalb.arn
   default_action {
-    target_group_arn = aws_alb_target_group.lamptg.arn
+    target_group_arn = aws_lb_target_group.lamptg.arn
     type             = "forward"
   }
 
@@ -45,8 +45,8 @@ resource "aws_lb_listener" "listener_http" {
 }
 
 resource "aws_lb_target_group_attachment" "ipattachment" {
-  #count            = var.az_count
-  target_group_arn = aws_alb_target_group.lamptg.arn
+  count            = var.az_count
+  target_group_arn = aws_lb_target_group.lamptg.arn
   target_id        = aws_instance.lampsetup[count.index].id
   port             = 80
 }

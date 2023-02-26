@@ -29,7 +29,7 @@ resource "aws_security_group_rule" "debuglaptop" {
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["${var.personal_laptop_ip}/32"]
-  security_group_id = aws_security_group.websg.id
+  security_group_id = aws_security_group.web_sg.id
 }
 
 resource "aws_security_group_rule" "ssh" {
@@ -39,14 +39,14 @@ resource "aws_security_group_rule" "ssh" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["${var.personal_laptop_ip}/32"]
-  security_group_id = aws_security_group.websg.id
+  security_group_id = aws_security_group.web_sg.id
 
 }
 
 #Internet Control Message Protocol (ICMP, Protocole de message de contrôle sur Internet)
 
 resource "aws_security_group_rule" "icmp" {
-  security_group_id = aws_security_group.websg.id
+  security_group_id = aws_security_group.web_sg.id
   type              = "ingress"
   from_port         = 0
   to_port           = 0
@@ -58,7 +58,7 @@ resource "aws_security_group_rule" "icmp" {
 
 
 resource "aws_security_group_rule" "web_egress" {
-  security_group_id = aws_security_group.websg.id
+  security_group_id = aws_security_group.web_sg.id
   type              = "egress"
   from_port         = 0
   to_port           = 0

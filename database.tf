@@ -5,17 +5,17 @@ resource "aws_db_instance" "database" {
   engine_version       = "5.7"
   instance_class       = "db.t3.micro"
   username             = "lamp"
-  password             = "azerty"
+  password             = "azerty123"
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot    = true
 
-  storage_type         = "gp2"
+  # storage_type         = "standard" #gp2
   db_subnet_group_name = aws_db_subnet_group.databasegroup.name
-  vpc_security_group_ids = [aws_security_group.dbsg.id]
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
   identifier             = "lampdb"
   #multi_az               = var.multi_az_db
 
-  tags {
+  tags = {
     Name = "Bases de donnees"
   }
 }

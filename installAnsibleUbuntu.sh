@@ -14,3 +14,6 @@ if ! hash ansible >/dev/null 2>&1; then
 else
     echo "Ansible already installed"
 fi
+
+git clone https://github.com/123sdfd/lamp-playbook01.git
+cd lamp-playbook01 && ansible-playbook components.yaml
