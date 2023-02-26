@@ -1,5 +1,8 @@
 module "database" {
   source = "./modules/data/mysql"
+
+  vpc_id = module.network.vpc_id
+  db_subnet_group_name = module.network.
 }
 
 module "network" {
@@ -11,6 +14,6 @@ module "loadbalancer" {
 }
 
 module "webserver" {
-  source = "./modules/webserver"
+  source = "./modules/webserver/apache"
 }
 
