@@ -3,7 +3,9 @@ data "aws_availability_zones" "available" {
 }
 
 
-#
+#Amazon Virtual Private Cloud (Amazon VPC) permet de lancer des ressources AWS dans un réseau virtuel défini par l'utilisateur.
+#Ce réseau virtuel ressemble beaucoup à un réseau traditionnel que vous pourriez exécuter dans votre propre centre de données.
+
 resource "aws_vpc" "lamp_vpc" {
   cidr_block = var.vpc_cidr
 
@@ -12,7 +14,7 @@ resource "aws_vpc" "lamp_vpc" {
   }
 }
 
-#
+#une passerelle Internet permet la communication entre votre VPC et Internet.
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.lamp_vpc.id
   
@@ -22,7 +24,8 @@ resource "aws_internet_gateway" "igw" {
 }
 
 
-#
+#nous avons besoin de deux tables de routage, une pour les serveurs web et une pour les serveurs de base de données.
+#Nous allons ajouter une route à la table de routage de notre sous-réseau qui dirige le trafic lié à Internet vers la passerelle Internet.
 resource "aws_route_table" "webroute" {
   vpc_id = aws_vpc.lamp_vpc.id
 
@@ -41,7 +44,7 @@ resource "aws_route_table" "dbroute" {
   }
 }
 
-#
+#un sous-réseau est une plage d'adresses IP dans votre VPC. Nous allons configurer deux sous-réseaux.
 resource "aws_subnet" "websubnets" {
   count                = var.az_count
   vpc_id               = aws_vpc.lamp_vpc.id
