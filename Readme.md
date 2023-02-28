@@ -16,15 +16,15 @@
 - Créer un compe AWS
 - Créer un utilisateur IAM sur le service Web Amazon
 - Générer une clé d'accès pour un utilisateur IAM
-- Configurer la clé pour le utilisateur sous le repertoire C:\Users\utilisateur\.aws  
+- Configurer la clé pour le utilisateur sous le repertoire 'C:\Users\utilisateur\.aws'
 
 
 
 
 # 
 Si vous traaivillez en equipe :
-Stocker l'état de terraform avec un compartiment S3
-créer une table dynamoDB pour verrouiller l'état de terraform : .terraform.lock.hcl
+- Stocker l'état de terraform avec un compartiment S3
+- créer une table dynamoDB pour verrouiller l'état de terraform : .terraform.lock.hcl
 
 
 
@@ -52,5 +52,23 @@ ensiute on va deployer les instances avec la déploiements Multi-AZ qui amélior
 le fichier playbook ansible est sur cette addresse github : 
  - https://github.com/123sdfd/lamp-playbook01.git
 
+***
+# Terraform configuration
+Donc on va executer les commands Terraform : 
 
+~~~
+ - terraform init .
+ - terraform plan
+ - terraform apply
+~~~
+
+ # 
+ Finalement on va detruire les machines pour pas avoir payé
+
+ ~~~
+ - terraform destroy
+ ~~~
+
+ #  
+ 
 
