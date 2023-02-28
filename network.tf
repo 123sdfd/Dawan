@@ -64,7 +64,7 @@ resource "aws_subnet" "dbsubnets" {
   }
 }
 
-
+#which designates a collection of subnets that your RDS instance can be provisioned in
 resource "aws_db_subnet_group" "databasegroup" {
   name       = "lampdb"
   subnet_ids = aws_subnet.dbsubnets.*.id

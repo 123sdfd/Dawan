@@ -1,4 +1,5 @@
 variable "aws_region" {
+  description = "AWS region"
   type    = string
   default = "eu-west-3"
 }
@@ -6,6 +7,7 @@ variable "aws_region" {
 variable "key_name" {
   type    = string
   default = "dawan"
+  sensitive = true
 }
 
 variable "personal_laptop_ip" {
@@ -23,6 +25,7 @@ variable "az_count" {
 }
 
 variable "instance_type" {
+  description = "Instance type for EC2 instances"
   type    = string
   default = "t2.micro"
 }

@@ -1,5 +1,5 @@
 resource "aws_lb" "lampalb" {
-  name               = "lamp-alb"
+  name               = "lamp-alb-dawan" #unique
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
