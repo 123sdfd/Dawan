@@ -4,19 +4,21 @@
 
 
 
- # prerequise
+ # 
+ prerequise :
+- Installer terraform sous windows
+- Compte github 
+- Installer git 
+- Générer une paire de clés pour une connexion sécurisée dans Windows
+- Ajoutez votre clé SSH publique à github
+- Installation de visual studio code
+- Installation aws cli sous windows
+- Créer un compe AWS
+- Créer un utilisateur IAM sur le service Web Amazon
+- Générer une clé d'accès pour un utilisateur IAM
+- Configurer la clé pour le utilisateur sous le repertoire C:\Users\utilisateur\.aws  
 
--installer terraform sous windows
--compte github 
--installer git 
--Générer une paire de clés pour une connexion sécurisée dans Windows
--ajoutez votre clé SSH publique à github
--installation de visual studio code
--installation aws cli sous windows
--créer un compe AWS
--créer un utilisateur IAM sur le service Web Amazon
--Générer une clé d'accès pour un utilisateur IAM
--Configurer la clé pour le utilisateur sous le repertoire C:\Users\utilisateur\.aws  
+
 
 
 # 
