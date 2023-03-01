@@ -2,13 +2,13 @@
 # 
 resource "aws_db_instance" "database" {
   allocated_storage    = 5
-  db_name              = "dawan-projet"
+  db_name              = "dawanprojet"
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t3.micro"
   username             = var.db_username #sensitive
   password             = var.db_password #sensitive 
-  parameter_group_name = aws_db_parameter_group.db_pg.name
+  parameter_group_name = "default.mysql5.7"
   skip_final_snapshot    = true #Set to true to disable taking a final backup when you destroy the database later
 
   # storage_type         = "standard" #gp2
@@ -25,15 +25,15 @@ resource "aws_db_instance" "database" {
 
 #This configuration enables connection logging for all instances using this parameter group.
 
-resource "aws_db_parameter_group" "db_pg" {
-  name   = "rds_pg"
-  family = "mysql5.7"
+# resource "aws_db_parameter_group" "db_pg" {
+#   name   = "rds-pg"
+#   family = "mysql5.7"
 
-  parameter {
-    name  = "log_connections"
-    value = "1"
-  }
-}
+#   parameter {
+#     name  = "log_connections"
+#     value = "1"
+#   }
+# }
 
 
 
