@@ -8,7 +8,7 @@
  Prérequis :
 - Installer Terraform sous Windows
 - Créer un Compte Github 
-- Installer it 
+- Installer Git 
 - Générer une paire de clés pour une connexion sécurisée sous Windows
 - Ajouter la clé SSH publique à Github
 - Installer Visual studio code
@@ -64,7 +64,7 @@ Nous allons exécuter les commandes Terraform :
 ~~~
 
  # 
- Finalement nous allons detruire les machines créées, afin de nous pas avoir à payer.
+ Finalement nous allons detruire les machines créées, afin de ne pas avoir à payer.
 
  ~~~
  - terraform destroy
