@@ -15,7 +15,7 @@ resource "aws_db_instance" "database" {
   db_subnet_group_name = aws_db_subnet_group.databasegroup.name
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   identifier             = "lampdb"
-  #multi_az               = var.multi_az_db
+  #multi_az               = var.multi_az_db ####
 
   tags = {
     Name = "Bases de donnees"
