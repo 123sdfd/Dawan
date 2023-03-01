@@ -78,7 +78,7 @@ resource "aws_db_subnet_group" "databasegroup" {
 }
 
 
-#
+# accociate les tables de routage avec les sous-réseau
 resource "aws_route_table_association" "private_db_route_table_association" {
   count          = var.az_count #
   subnet_id      = element(aws_subnet.dbsubnets.*.id, count.index)
@@ -116,6 +116,7 @@ resource "aws_route_table_association" "public_web_route_table_association" {
 # } 
 
 
+# la route vers la passerrelle internet
 
 resource "aws_route" "internet_access_web" {
   route_table_id         = aws_route_table.webroute.id

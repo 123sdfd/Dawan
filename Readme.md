@@ -44,7 +44,8 @@ Une pile **LAMP** est un ensemble de quatre technologies logicielles différente
 ***
 Nous allons créer l'infrastructure étape par étape. Pour cela, nous utiliserons les ressources Terraform.
 tout d'abord on va créer notre reseau et contrôler le trafic vers les ressources à l'aide de groupes de sécurité
-ensiute on va deployer les instances avec la déploiements Multi-AZ qui améliorent la disponibilité, la durabilité des donnés et la tolérance aux pannes pour les instances de bases de données et les instances de webs
+ensiute on va deployer les instances avec la déploiements Multi-AZ qui améliorent la disponibilité, la durabilité des donnés et la tolérance aux pannes pour les instances de bases de données et les instances de webs.
+Dans un déploiement multi-AZ Amazon RDS, Amazon RDS crée automatiquement une instance de base de données primaire et réplique de manière synchrone les données vers une instance dans une autre zone de disponibilité. Lorsqu'il détecte un échec, Amazon RDS bascule automatiquement vers une instance de secours sans intervention manuelle.
 
 
 ***

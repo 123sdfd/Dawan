@@ -1,6 +1,8 @@
+# Une instance de bases de données est un environnement de base de données isolé s'exécutant dans le cloud.
+# 
 resource "aws_db_instance" "database" {
   allocated_storage    = 5
-  db_name              = "lamp"
+  db_name              = "dawan-projet"
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t3.micro"
@@ -22,6 +24,7 @@ resource "aws_db_instance" "database" {
 
 
 #This configuration enables connection logging for all instances using this parameter group.
+
 resource "aws_db_parameter_group" "db_pg" {
   name   = "rds_pg"
   family = "mysql5.7"

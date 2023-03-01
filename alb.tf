@@ -1,3 +1,5 @@
+# Un équilibreur de charge constitue le point de contact unique pour les clients.
+
 resource "aws_lb" "lampalb" {
   name               = "lamp-alb-dawan" #unique
   internal           = false
@@ -12,6 +14,7 @@ resource "aws_lb" "lampalb" {
   }
 }
 
+# Groupes cibles pour vos équilibreurs de charge d'applications
 
 resource "aws_lb_target_group" "lamptg" {
   name        = "lamp-alb-target"
@@ -33,6 +36,9 @@ resource "aws_lb_target_group" "lamptg" {
   }
 }
 
+
+#Un écouteur est un processus qui recherche les demandes de connexion à l'aide du protocole et du port que vous avez configurés.
+
 resource "aws_lb_listener" "listener_http" {
   load_balancer_arn = aws_lb.lampalb.arn
   default_action {
@@ -43,6 +49,9 @@ resource "aws_lb_listener" "listener_http" {
   port              = "80"
   protocol          = "HTTP" #default
 }
+
+
+# Attacher les instances EC2 au sein du groupes cibles
 
 resource "aws_lb_target_group_attachment" "ipattachment" {
   count            = var.az_count
