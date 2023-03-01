@@ -5,7 +5,7 @@
 
 
  # 
- prerequise :
+ prérequise :
 - Installer terraform sous windows
 - Compte github 
 - Installer git 
@@ -57,7 +57,7 @@ le fichier playbook ansible est sur cette addresse github :
 Donc on va executer les commands Terraform : 
 
 ~~~
- - terraform init .
+ - terraform init 
  - terraform plan
  - terraform apply
 ~~~
