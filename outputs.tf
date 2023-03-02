@@ -3,5 +3,5 @@ output "alburl" {
 }
 
 output "dburl" {
-  value = aws_db_instance.database.address
+  value = aws_db_instance.database.endpoint
 }
