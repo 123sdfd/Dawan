@@ -12,7 +12,7 @@ variable "key_name" {
 
 variable "personal_laptop_ip" {
   type    = string
-  default = "78.125.143.214"
+  default = "109.190.244.206"
 }
 
 
